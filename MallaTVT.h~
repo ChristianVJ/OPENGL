@@ -1,0 +1,69 @@
+//**************************************************************************
+// Práctica 1
+//
+// Domingo Martin Perandres 2013
+//
+// GPL
+//**************************************************************************
+
+#include <GL/gl.h>
+#include <GL/glut.h>
+#include <vector>
+#include "stdlib.h"
+#include "vertex.h"
+#include <math.h>
+
+using namespace std; 
+
+
+class Figura {
+
+private:
+
+	static int modo;
+	int puntos_perfil;
+
+  	vector<float> v_vertices_ply;  	// vector de vértices relacionados con el ply
+  	vector<int> v_caras_ply; 	// vector de caras relacionados con el ply
+	
+	vector< _vertex3f > Vertices;   		// Vector de vértices
+        vector< _vertex3ui > Caras;			// Vector de caras
+        vector< _vertex3f > normal_vertices; 		// Vector de normales de los vértices
+        vector< _vertex3f > normal_caras;		// Vector de normales de las caras
+
+public:
+
+	void Constructor(const char * filename);
+	void revolucionar(const char * filename);
+	void Modo_de_dibujo (int model);
+
+	void Dibujar();
+
+	int getModo() const; // Modo de visualización
+	int getNum_vertices_inicial() const;
+
+	void normales_calcula_visualiza();
+
+	/*//MÉTODOS DE VISUALIZACIÓN (PRÁCTICA1)
+
+	void visualizar_vertices(); // Dibuja en vertices PRÁCTICA1
+	void visualizar_lineas();   // Dibuja en lineas   PRÁCTICA1
+	void visualizar_solido();   // Dibuja en solido   PRÁCTICA1
+	void visualizar_ajedrez();  // Dibuja en ajedrez  PRÁCTICA1
+	// void visualizar_verticeslineas(); 		// Dibuja en vertices y lineas
+	// void visualizar_solidolineas(); 		// Dibuja solido y lineas
+	// void visualizar_solidolineasajedrez();	// Dibuja ajedrez y lineas
+	// void visualizar_todo();			// Dibuja todo
+	
+	//MÉTODOS NORMALES Y REVOLUCIÓN (PRÁCTICA 2)
+
+	void Normales();
+	
+	void visualizar_normales();*/
+
+	
+
+
+};
+
+

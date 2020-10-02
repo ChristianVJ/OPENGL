@@ -1,0 +1,340 @@
+
+#include "user_code.h"
+#include <vector>
+#include <iostream>
+#include "vertex.h"
+#include <stdlib.h>
+#include "stdlib.h"
+#include "stdio.h"
+#include <GL/glut.h>
+#include <ctype.h>
+#include "file_ply_stl.h"
+#include "vertex.h"
+#include <cmath>
+
+
+/******************************************************************************************************/
+/******************************************** MODELOS *************************************************/
+/******************************************************************************************************/
+
+/*
+//////////////////////////////////// CONSTRUCTOR DE CUALQUIER MODELO //////////////////////////////////////
+
+vector <float> puntoCaras;
+
+Figura::Figura (vector<float> &Vertices, vector<int> &Caras){
+
+	//v_vertices.resize(Vertices.size());  //Asignar nº de vertices al vector
+	_vertex3f aux;
+	for (int i=0;i<Vertices.size();i+=3)
+	{
+		aux.x = Vertices[i];
+		aux.y = Vertices[i+1];
+		aux.z = Vertices[i+2];
+		v_vertices.push_back(aux);
+
+	}
+	cout << "\n- Numero de vertices del modelo : " << v_vertices.size()/3 << endl;
+	v_caras.resize(Caras.size());	// Asignar nº caras del modelo al vector
+	for (int i=0;i<Caras.size();i++){
+		v_caras[i]=Caras[i];
+	}
+	cout << "- Numero de caras del modelo : " << v_caras.size()/3 << endl;
+
+
+}
+
+/******************************************************************************************************/
+/***********************************************   PRÁCTICAS ******************************************/
+/****************************************************************************************************** /
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////PRÁCTICA 1////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// MODO VÉRTICES
+void Figura::visualizar_vertices() 
+{	
+	int i;
+
+	//glColor3f(this->v_color[0],this->v_color[1],this->v_color[2]);  //COLOR
+	glColor3f(1,0,0); 
+	glPointSize(2);							//TAMAÑO PUNTO
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	//glEnableClientState(GL_VERTEX_ARRAY);
+	//glVertexPointer(3,GL_FLOAT,0,& (v_vertices[0]));
+	//glDrawArrays(GL_POINTS,0,v_vertices.size());								
+	glBegin(GL_POINTS);
+		for (i=0; i<this->v_vertices.size() ;i++)
+	           glVertex3f(this->v_vertices[i].x, this->v_vertices[i].y, this->v_vertices[i].z);
+	glEnd();
+		
+}
+
+
+// MODO LINEAS
+void Figura::visualizar_lineas()
+{
+	int i;
+
+	// glColor3f(this->v_color[0],this->v_color[1],this->v_color[2]);	//COLOR
+	glColor3f(0,1,0); 
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);			//MODO
+			
+	glBegin(GL_LINES);
+		for (i=0; i<this->v_caras.size() ;i++)
+		  glVertex3f(this->v_vertices[this->v_caras[i]].x,this->v_vertices[this->v_caras[i]].y,this->v_vertices[this->v_caras[i]].z);
+	glEnd();
+}
+
+
+// MODO TRIANGULOS SOLIDOS
+void Figura::visualizar_solido()
+{
+	int i;
+
+	// glColor3f(this->v_color[0],this->v_color[1],this->v_color[2]);	//COLOR
+	glColor3f(0,0,1); 
+	glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);			//MODO
+
+	glBegin(GL_TRIANGLES);
+		for (i=0; i<this->v_caras.size() ;i=i+3){
+		glVertex3f(this->v_vertices[this->v_caras[i]].x,this->v_vertices[this->v_caras[i]].y,this->v_vertices[this->v_caras[i]].z);
+		glVertex3f(this->v_vertices[this->v_caras[i+1]].x,this->v_vertices[this->v_caras[i+1]].y,this->v_vertices[this->v_caras[i+1]].z);
+		glVertex3f(this->v_vertices[this->v_caras[i+2]].x,this->v_vertices[this->v_caras[i+2]].y,this->v_vertices[this->v_caras[i+2]].z);
+		}
+	glEnd();
+
+	
+}
+
+
+// MODO TRIANGULOS AJEDREZ
+void Figura::visualizar_ajedrez()
+{
+	int i;
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);	//MODO
+	//glShadeModel(GL_FLAT);
+	glBegin(GL_TRIANGLES);
+	
+	for (i=0; i<this->v_caras.size() ;i=i+3){
+
+		if (i%2==0)
+			glColor3f(1,0,0); //COLOR	
+ 		else 
+ 			 //glColor3f(this->v_color[0],this->v_color[1],this->v_color[2]);
+			 glColor3f(1,1,0); 
+ 
+	glVertex3f(this->v_vertices[this->v_caras[i]].x,this->v_vertices[this->v_caras[i]].y,this->v_vertices[this->v_caras[i]].z);
+	glVertex3f(this->v_vertices[this->v_caras[i+1]].x,this->v_vertices[this->v_caras[i+1]].y,this->v_vertices[this->v_caras[i+1]].z);
+	glVertex3f(this->v_vertices[this->v_caras[i+2]].x,this->v_vertices[this->v_caras[i+2]].y,this->v_vertices[this->v_caras[i+2]].z);
+
+	}
+	glEnd();
+
+
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////PRÁCTICA 2////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// VISUALIZAR NORMALES VÉRTICES
+void Figura::visualizar_normales_vertices()
+{	glPointSize(10);
+    glColor3f(0,0,1);
+    glBegin(GL_LINES);
+    for(int i = 0; i<vnormales.size(); i++){
+        glVertex3f( v_vertices[i].x+vnormales[i].x*0.6, 
+                    v_vertices[i].y+vnormales[i].y*0.6, 
+                    v_vertices[i].z+vnormales[i].z*0.6);
+        glVertex3f( v_vertices[i].x, 
+                    v_vertices[i].y, 
+                    v_vertices[i].z);
+    }
+    glEnd();
+	
+}
+
+
+
+// NORMALES VÉRTICES
+
+void Figura::vertex_normales(){	
+	vector<_vertex3f> aux;
+	aux.resize(v_vertices.size(),{0,0,0});	
+	int j=0;
+	for (int i=0;i<v_caras.size();i+=3)	{	//Recorrido de todas las caras
+		aux[v_caras[i]] += normales[j];
+		aux[v_caras[i+1]] += normales[j];
+		aux[v_caras[i+2]] += normales[j];
+		j++;
+	}
+	vnormales.clear();
+	for(int i=0;i<aux.size();i++){
+	aux[i].normalize();
+	vnormales.push_back(aux[i]);
+	}
+
+}
+
+
+// NORMALES A LAS CARAS
+
+void Figura::mesh_normales(){
+
+float modulo;
+_vertex3f N; 	    // Vector para el producto vectorial
+_vertex3f vectorAB; //vector AB que guarda vértices A y B
+_vertex3f vectorAC; //vector AC que guarda vértices A y C
+normales.clear();
+cout << "Procesando normales para " << v_caras.size() << " caras." << endl << endl;
+
+for(int i=0; i<v_caras.size(); i=i+3){
+
+    //cout << Caras[i] << " " << Caras[i+1] << " " << Caras[i+2] << endl;
+
+    //... Si se definen dos vectores AB y BC ... incluimos en vectorAB los vértices A y B de esa cara ...
+
+    vectorAB.x=(v_vertices[v_caras[i+1]].x - v_vertices[v_caras[i]].x);
+    vectorAB.y=(v_vertices[v_caras[i+1]].y - v_vertices[v_caras[i]].y);
+    vectorAB.z=(v_vertices[v_caras[i+1]].z - v_vertices[v_caras[i]].z);
+
+    //cout << "Vector AB: " << vectorAB.x << " - " << vectorAB.y << " - " << vectorAB.z << endl;
+
+    //... Si se definen dos vectores AB y BC ... incluimos en vectorAC los vértices A y C de esa cara ...
+
+    vectorAC.x=(v_vertices[v_caras[i+2]].x - v_vertices[v_caras[i]].x);
+    vectorAC.y=(v_vertices[v_caras[i+2]].y - v_vertices[v_caras[i]].y);
+    vectorAC.z=(v_vertices[v_caras[i+2]].z - v_vertices[v_caras[i]].z);
+
+    //cout << "Vector AC: " << vectorAC.x << " - " << vectorAC.y << " - " << vectorAC.z << endl;
+
+   //... Un vector normal al plano que contiene a la cara N se obtiene mediante la expresión N = AB ⊗ AC ...
+
+    N.x=((vectorAB.y*vectorAC.z) - (vectorAB.z*vectorAC.y));
+    N.y=((vectorAB.z*vectorAC.x) - (vectorAB.x*vectorAC.z));
+    N.z=((vectorAB.x*vectorAC.y) - (vectorAB.y*vectorAC.x));
+
+    //cout << "Vector N: " << N.x << " - " << N.y << " - " << N.z << endl;
+
+    //Módulo del producto vectorial.
+
+    modulo = sqrtf( (N.x*N.x) + (N.y*N.y) + (N.z*N.z) );
+
+    //cout << "Modulo: " << modulo << endl;
+
+    //... Así, los vectores normales N, que han sido calculados previamente, tienen que ser normalizados...
+
+    N.x = (N.x/modulo);
+    N.y = (N.y/modulo);
+    N.z = (N.z/modulo);
+
+   // cout << "Vector N normalizado: " << N.x << " - " << N.y << " - " << N.z << endl;
+
+   normales.push_back(N); //Lo introducimos en el vector de normales. 
+   
+
+	}
+	
+}
+
+
+// REVOLUCIÓN PERFIL
+
+
+void Figura::revolucionarPerfil(int divisiones){ // Le pasamos como parametro el número de divisiones a realizar
+
+
+float x,y,z;								// Nuevos puntos a generar a partir de los vértices del perfil
+int puntos_perfil = v_vertices.size();					// Número de puntos que tiene el perfil para el for
+float gradosDivisiones = 2*M_PI/(divisiones*1.0);			// Grados según las divisiones que introduzcamos dividido por 360º y en radianes
+_vertex3f aux_v;
+
+	 for(int i=0; i<divisiones; i++){ 	// En cada división formamos los puntos generados a partir del perfil por esta.    
+			for(int j=puntos_perfil*i; j < ((puntos_perfil*i)+puntos_perfil); j++){  
+
+			//5*0 5*1 5*2 5*3		5*1 + 5
+
+			//Generamos los nuevos puntos revolucionados
+
+  			aux_v.x = ((v_vertices[j].x)*cos(gradosDivisiones)) + ((v_vertices[j].z)*sin(gradosDivisiones));
+ 			aux_v.y =(v_vertices[j].y);	
+  			aux_v.z = -((v_vertices[j].x)*sin(gradosDivisiones)) + ((v_vertices[j].z)*cos(gradosDivisiones));
+                  
+			if(!(aux_v.x==0 && aux_v.y==0 && aux_v.z==0)) //Eliminamos ceros del vector de vértices (fallo)
+                   	  v_vertices.push_back(aux_v) ;
+
+
+				//------------CARAS CENTRALES-----------//
+
+
+                    			 if(j>puntos_perfil*i){ // Una iteración más de la inicial 6 > 5*1 (creada ya una revolución)
+
+						// Cara 1
+						v_caras.push_back(j-1);  // 5
+						v_caras.push_back(j+puntos_perfil); // 6+5 = 11
+						v_caras.push_back(j);  // 6
+						// Cara 2
+						v_caras.push_back(j-1); // 5
+						v_caras.push_back(j-1+puntos_perfil); // 5 + 5 = 10
+						v_caras.push_back(j+puntos_perfil); // 6 + 5 = 11 
+						
+					}
+                    	}
+            }
+
+
+_vertex3f aux;
+aux.x=0;
+aux.y=v_vertices[0].y; //punto en la tapa inferior central
+aux.z=0;
+
+///////////////////////////////////////////////////
+
+_vertex3f aux2;
+aux2.x=0;
+aux2.y=v_vertices[puntos_perfil-1].y; // punto en la tapa superior central
+aux2.z=0;
+
+
+			//------------TAPA INFERIOR-----------//
+		
+			
+
+				v_vertices.push_back(aux);
+					for (int i=0; i < divisiones; i++){ // hasta numero de revoluciones 
+						v_caras.push_back(v_vertices.size()-1);  // 40 - 1 = 39
+						v_caras.push_back(puntos_perfil+(puntos_perfil*i)); // 5 + 5*1 = 10
+						v_caras.push_back(puntos_perfil*i);  // 5*1 = 5
+					}
+			
+			
+			//------------TAPA SUPERIOR-----------//
+
+			
+
+				v_vertices.push_back(aux2);
+					for (int i=1; i <= divisiones; i++){ // hasta numero de revoluciones 
+						v_caras.push_back(v_vertices.size()-1); // 39
+						v_caras.push_back(puntos_perfil*i-1); // 5*1 - 1 = 4
+						v_caras.push_back((puntos_perfil*i-1)+puntos_perfil); // 5*1 - 1 + 5 = 9
+
+					}	
+			
+	
+
+}
+*/
+
+

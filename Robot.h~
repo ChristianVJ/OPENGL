@@ -1,0 +1,68 @@
+//**************************************************************************
+// Práctica 3
+//
+// Domingo Martin Perandres 2013
+//
+// GPL
+//**************************************************************************
+
+#include <GL/gl.h>
+#include <vector>
+#include "vertex.h"
+
+
+
+using namespace std; 
+
+
+class Robot
+{
+
+  private:
+    //Variable que representa el modo de dibujo
+    int model;
+
+    //Metodos privados que dibujan objetos simples de glut
+
+    void draw_cylinder();
+    void draw_sphere(GLint slices, GLint stacks);
+    void draw_cube();
+
+  public:
+
+    	Robot();
+    	void setModel(int model);
+    	int getModel() const;
+   	void visualizar_modelo_jerarquico ();
+   	void giro_derecha_socom();
+	void giro_izquierda_socom();	
+	float giro_socom;
+	void activa_laser();
+	void desactiva_laser();
+	void activa_luz();
+	void desactiva_luz();
+	void retroceso_corredera();
+	float laser;
+	float luz,luz2;
+	float corredera;
+float cont;
+
+void disparar();
+
+
+
+
+
+
+
+
+   private:
+
+
+    void dibuja_todo();
+
+	
+
+};
+
+

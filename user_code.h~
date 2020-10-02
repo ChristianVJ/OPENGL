@@ -1,0 +1,48 @@
+
+#include <GL/gl.h>
+#include <GL/glut.h>
+#include <vector>
+#include "stdlib.h"
+#include "vertex.h"
+#include <math.h>
+
+
+using namespace std; 
+
+/*
+class Figura {
+
+public:
+
+	vector<_vertex3f> v_vertices;  //Vector de vértices
+	vector<int> v_caras;             //Vector de caras
+	vector<_vertex3f> normales;    //Vector de normales a las caras
+	vector<_vertex3f> vnormales;	//Vector de normales a los vertices
+	
+	
+	float v_color[3];	        	 //Vector colores (RGB)
+	//float v_color_a[3];   	         //Vector colores para ajedrez (RGB)
+	int numDivisiones;		
+
+	Figura(vector<float> &Vertices, vector<int> &Caras); //Constructor
+
+	//MÉTODOS DE VISUALIZACIÓN (PRÁCTICA1)
+
+	void visualizar_vertices(); // Dibuja en vertices PRÁCTICA1
+	void visualizar_lineas();   // Dibuja en lineas   PRÁCTICA1
+	void visualizar_solido();   // Dibuja en solido   PRÁCTICA1
+	void visualizar_ajedrez();  // Dibuja en ajedrez  PRÁCTICA1
+	
+	//MÉTODOS NORMALES Y REVOLUCIÓN (PRÁCTICA 2)
+
+	void mesh_normales();
+	void vertex_normales();
+	void revolucionarPerfil(int numDivisiones);
+	void visualizar_normales_vertices(); //Dibuja ajedrez y las normales
+
+
+
+};*/
+
+	
+

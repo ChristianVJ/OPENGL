@@ -1,0 +1,39 @@
+//**************************************************************************
+// Práctica 3
+//
+// Domingo Martin Perandres 2013
+//
+// GPL
+//**************************************************************************
+
+
+#include <GL/gl.h>
+#include <GL/glut.h>
+#include <vector>
+#include "stdlib.h"
+#include "vertex.h"
+#include <math.h>
+
+
+using namespace std; 
+
+
+class Minecraft {
+
+public:
+
+	// MODELO JERÁRQUICO (PRÁCTICA 3)
+
+	void cuadrado (float x, float y, float z);
+	void cuadrado2 (float x, float y, float z);
+	float modulo (float x,float y,float z);
+    	void draw();
+
+	void cabeza_right();
+	void cabeza_left();
+	void rdefault();
+	float giro_cabeza;
+	void control_animacion();
+
+};
+

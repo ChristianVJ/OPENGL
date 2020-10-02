@@ -1,0 +1,49 @@
+#include "Materiales.h"
+#include <vector>
+#include <GL/gl.h>
+#include "jpg_imagen.hpp"
+#include "textura_imagen.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <GL/glut.h>
+
+Material :: Material() // SIN TEXTURA
+{
+  text = NULL;
+  ambiental[3] = 1.0
+  difusa[3] = 1.0
+  especular[3]  = 1.0;
+}
+
+Material :: Material(const char *filematerial) // CON TEXTURA
+{
+  tex = new Textura (filematerial);
+  ambiental[3] = 1.0
+  difusa[3] = 1.0
+  especular[3]  = 1.0;
+}
+
+
+void Material :: activate(){
+
+  glEnable(GL_LIGHTING); // habilitamos iluminación
+  glEnable(GL_NORMALIZE);
+  glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+  
+
+
+  glMaterialfv(GL_FRONT,GL_AMBIENT,ambiental);
+  glMaterialfv(GL_FRONT,GL_DIFFUSE,difusa);
+  glMaterialfv(GL_FRONT,GL_SPECULAR,especular);
+  glMaterialf(GL_FRONT,GL_SHININESS,brillo);
+  GLfloat color[] = {0.1,0.1,0.1};
+  glMaterialfv(GL_FRONT, GL_EMISSION, color);
+
+  if(text!=NULL) 
+    text->Activar_textura();
+  else
+    glDisable(GL_TEXTURE_2D);
+
+
+}

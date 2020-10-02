@@ -1,0 +1,470 @@
+#include "user_code.h"
+#include "Minecraft.h"
+#include <vector>
+#include <iostream>
+#include "vertex.h"
+#include <stdlib.h>
+#include "stdlib.h"
+#include "stdio.h"
+#include <GL/glut.h>
+#include <ctype.h>
+#include "file_ply_stl.h"
+#include "vertex.h"
+#include <cmath>
+
+
+Minecraft::Figura()
+{
+	rdefault();
+}
+
+
+
+
+void Minecraft::cuadrado(float x, float y, float z){
+
+
+float a,b,c;
+		
+	a = x/2;   	// Vertice a la derecha o izquierda
+	b = y;		// Altura
+	c = z/2;	// Profundidad
+
+
+	// GLFLAT rellena con el color activo
+        // GL_SMOOTH rellenará con los colores activos en la definición de cada vértice.
+	
+     glShadeModel(GL_SMOOTH);  
+
+	// (GL_QUADS) Esta primitiva funciona exactamente igual que GL_TRIANGLES, pero dibujando cuadrados.
+	// GL_QUAD_STRIP, para dibujar “tiras” de cuadrados.
+
+     glBegin(GL_QUAD_STRIP); // Dibujamos en forma de tira, pared trasera, pared superior, delantera e inferior
+      
+		// PARED VERTICAL TRASERA
+
+   //  glNormal3f( 0.0, 0.0, -1.0 );  		
+
+      glVertex3f( a, 0, -c );  			// vertice inferior derecho trasero
+      glVertex3f( -a, 0, -c );  		// vertice inferior izquierdo trasero
+      glVertex3f( a, b, -c );			// vertice superior derecho trasero
+      glVertex3f( -a, b, -c );			// vertice superior izquierdo trasero
+	
+
+		// PARED HORIZONTAL SUPERIOR
+
+    // glNormal3f( 0.0, 1.0, 0.0 );    
+     	 glVertex3f( a, b, c ); 			// vertice superior derecho delantero
+     	 glVertex3f( -a, b, c );			// vertice superior izquierdo delantero
+
+		// PARED VERTICAL DELANTERA
+
+    // glNormal3f( 0.0, 0.0, 1.0 );       	
+      glVertex3f( a, 0, c );			// vertice inferior derecho delantero	
+      glVertex3f( -a, 0, c );			// vertice inferior izquierdo delantero
+
+		// PARED HORIZONTAL INFERIOR
+	  
+     // glNormal3f( 0.0, -1.0, 0.0 );       
+      glVertex3f( a, 0, -c );			// vertice inferior derecho trasero
+      glVertex3f( -a, 0, -c ); 			// vertice inferir izquierda trasero
+
+    glEnd();
+
+
+    glBegin( GL_QUADS ); //Ahora dibujamos en cuadrados los laterales
+			
+			// PARED LATERAL DERECHA
+
+      // glNormal3f( 1.0, 0.0, 0.0 );
+      glVertex3f( a, 0, -c ); 			// vertice inferior derecho lateral derecho
+      glVertex3f( a, b, -c );			// vertice superior derecho lateral derecho
+      glVertex3f( a, b, c );			// vertice superior izquierdo lateral derecho
+      glVertex3f( a, 0, c ); 			// vertice inferior izquierdo lateral derecho
+
+   glEnd();
+
+
+
+   glBegin( GL_QUADS );
+
+      // glNormal3f( -1.0, 0.0, 0.0 );
+      glVertex3f( -a, 0, -c );
+      glVertex3f( -a, 0, c );
+      glVertex3f( -a, b, c );
+      glVertex3f( -a, b, -c );
+
+
+
+   glEnd();
+
+
+}
+
+
+void Minecraft::cuadrado2(float x, float y, float z){
+
+
+float a,b,c;
+		
+	a = x/2;   	// Vertice a la derecha o izquierda
+	b = y;		// Altura
+	c = z/2;	// Profundidad
+
+
+	// GLFLAT rellena con el color activo
+        // GL_SMOOTH rellenará con los colores activos en la definición de cada vértice.
+	
+     glShadeModel(GL_SMOOTH);  
+
+	// (GL_QUADS) Esta primitiva funciona exactamente igual que GL_TRIANGLES, pero dibujando cuadrados.
+	// GL_QUAD_STRIP, para dibujar “tiras” de cuadrados.
+
+     glBegin(GL_QUAD_STRIP); // Dibujamos en forma de tira, pared trasera, pared superior, delantera e inferior
+      
+		// PARED VERTICAL TRASERA
+
+   //  glNormal3f( 0.0, 0.0, -1.0 );  		
+	
+      glVertex3f( a, 0, -c );  			// vertice inferior derecho trasero
+      glVertex3f( -a, 0, -c );  		// vertice inferior izquierdo trasero
+      glVertex3f( a, b, -c );			// vertice superior derecho trasero
+      glVertex3f( -a, b, -c );			// vertice superior izquierdo trasero
+	
+
+		// PARED HORIZONTAL SUPERIOR
+
+    // glNormal3f( 0.0, 1.0, 0.0 );  
+	
+     	 glVertex3f( a, b, c ); 			// vertice superior derecho delantero
+     	 glVertex3f( -a, b, c );			// vertice superior izquierdo delantero
+
+		// PARED VERTICAL DELANTERA
+
+    // glNormal3f( 0.0, 0.0, 1.0 );  
+        // glColor3f(1,0,0);     	
+      glVertex3f( a, 0, c );			// vertice inferior derecho delantero
+	 // glColor3f(1,1,1);  
+      glVertex3f( -a, 0, c );			// vertice inferior izquierdo delantero
+		// PARED HORIZONTAL INFERIOR
+	  
+     // glNormal3f( 0.0, -1.0, 0.0 );       
+      glVertex3f( a, 0, -c );			// vertice inferior derecho trasero
+      glVertex3f( -a, 0, -c ); 			// vertice inferir izquierda trasero
+
+    glEnd();
+
+
+    glBegin( GL_QUADS ); //Ahora dibujamos en cuadrados los laterales
+			
+			// PARED LATERAL DERECHA
+
+      // glNormal3f( 1.0, 0.0, 0.0 );
+      glVertex3f( a, 0, -c ); 			// vertice inferior derecho lateral derecho
+      glVertex3f( a, b, -c );			// vertice superior derecho lateral derecho
+      glVertex3f( a, b, c );			// vertice superior izquierdo lateral derecho
+      glVertex3f( a, 0, c ); 			// vertice inferior izquierdo lateral derecho
+
+   glEnd();
+
+
+
+   glBegin( GL_QUADS );
+
+      // glNormal3f( -1.0, 0.0, 0.0 );
+      glVertex3f( -a, 0, -c );
+      glVertex3f( -a, 0, c );
+      glVertex3f( -a, b, c );
+      glVertex3f( -a, b, -c );
+
+
+
+   glEnd();
+
+
+}
+
+
+
+/*void Figura::Esfera(){
+
+glColor3f(0,0,1);
+glutWireTorus(4, 4, 10, 50);
+glPushMatrix();
+glTranslatef(0,1,0);
+glutWireSphere(2.0, 16, 16);
+glPopMatrix();
+glutSwapBuffers( );
+
+} */
+
+
+void Minecraft::draw()
+{
+
+    GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_ambient[] = { 0.7, 0.7, 0.7, 1.0 };
+    GLfloat mat_ambient_color[] = { 0.8, 0.8, 0.2, 1.0 };
+    GLfloat mat_diffuse[] = { 0.1, 0.5, 0.8, 1.0 };
+    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat no_shininess[] = { 0.0 };
+    GLfloat low_shininess[] = { 5.0 };
+    GLfloat high_shininess[] = { 100.0 };
+    GLfloat mat_emission[] = {0.3, 0.2, 0.2, 0.0};
+    GLfloat mat_shininess[] = { 50.0 };
+    GLfloat rojo[] = {10,0,0};
+
+glClearColor (0.0, 0.0, 0.0, 0.0); //COLOR DE FONDO
+
+// 1 - Para hacer que la luz ambiente no sea la de ninguna fuente de luz, utilizamos:
+GLfloat luz_ambiental[] = { 0.3, 0.2, 0.2, 1.0 };
+glLightModelfv (GL_LIGHT_MODEL_AMBIENT, luz_ambiental); 
+
+GLfloat light_position[] = { 0.0, 0.0, 1.0, 0.0 };
+
+// 2 - Por defecto situamos al observador en el infinito y entonces la luz afecta de la misma manera a todos los objetos 
+glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER,GL_TRUE);
+
+// 3 - Antes de realizar una operacion de transformacion se usa ...
+glMatrixMode(GL_MODELVIEW); 
+//GL_MODELVIEW cambios de modelado y posicion de la camara
+//GL_PROJECTION cambios a la proyeccion de la escena de 3 a 2D
+//GL_TEXTURA en las coordenadas de las texturas
+
+//_________________________________________________________
+glPushMatrix(); // Cambios unicamente dentro del pushmatrix
+
+glLoadIdentity(); // Se inicializa la matriz identidad 
+glLightfv(GL_LIGHT0,GL_POSITION,light_position);
+
+glPopMatrix();
+//_________________________________________________________
+
+// método que utiliza OpenGL para rellenar de color los polígonos
+glShadeModel(GL_SMOOTH);
+// GL_FLAT, rellenará con el color activo en el momento que se definió el último parámetro 
+// GL_SMOOTH, rellenará interpolando los colores activos en la definición de cada vértice.
+
+//glEnable(GL_LIGHTING);  // Activo iluminacion
+//glEnable(GL_LIGHT0);	// Activo la luz creada
+//glEnable(GL_DEPTH_TEST);
+
+glPolygonMode(GL_FRONT_AND_BACK,GL_FILL); // Tipo de poligono
+
+glPushMatrix(); // MODELO BEGIN
+glScalef(2,2,2); // Escala el objeto (MAYOR 1 , AUMENTA, MENOR 1, DISMINUYE)
+		 // Deforma el objeto si no son iguales los 3 elementos
+	
+///////////////////////////////////////////////////////////////////////////////////////
+
+glPushMatrix(); // Cabeza con dos ojos y dos fuentes de luz y AFRO BEGIN
+	
+	
+	//1. Girar la cabeza
+	glRotatef(giro_cabeza,0,1,0);
+
+	// PELO BASE 
+
+	glPushMatrix();
+	glTranslatef(0,5.5,0);
+	glColor3f(0.2,0.2,0.2);  
+	cuadrado(1.6,0.3,1.8);
+	glPopMatrix();
+
+	// PELO DERECHA 
+
+	glPushMatrix();
+	glTranslatef(0.9,4,0);
+	glColor3f(0.2,0.2,0.2); 
+	cuadrado(0.2,1.7,1.8);
+	glPopMatrix();
+
+	// PELO IZQUIERDA 
+
+	glPushMatrix();
+	glTranslatef(-0.9,4,0);
+	glColor3f(0.2,0.2,0.2);  
+	cuadrado(0.2,1.7,1.8);
+	glPopMatrix();
+
+	// PELO TRASERO 
+
+	glPushMatrix();
+	glTranslatef(0,4,-0.9);
+	glColor3f(0.2,0.2,0.2);  
+	cuadrado(1.6,1.7,0.3);
+	glPopMatrix();	
+
+	 // CABEZA MINECRAFT
+
+	glPushMatrix();
+	glTranslatef(0,4,0);
+	glColor3f(0,1,0);  
+	cuadrado(1.5,1.5,1.5);
+	glPopMatrix();
+	
+				// OJO IZQUIERDO
+				glPushMatrix();
+				glTranslatef(-0.3,4.8,0.78);
+				glScalef(2,2,2);
+				glColor3f(0,0,0);
+				cuadrado(0.16,0.16,0);
+				glPopMatrix();
+
+							// LUZ OJO IZQ	
+							glPushMatrix();
+							glTranslatef(-0.3,4.95,1.4);
+							glRotatef(180,1,0,0);
+							glColor3f(0,0,1);  
+							glutWireCone(0.1,1,50,20);
+							glPopMatrix();			
+
+				// OJO DERECHO
+				glPushMatrix();
+				glTranslatef(0.3,4.8,0.78);
+				glScalef(2,2,2);
+				glColor3f(0,0,0);
+				cuadrado(0.16,0.16,0);
+				glPopMatrix();
+							// LUZ OJO DCH	
+							glPushMatrix();
+							glTranslatef(0.3,4.95,1.4);
+							glRotatef(180,1,0,0);
+							glColor3f(0,0,1);  
+							glutWireCone(0.1,1,50,20);
+							glPopMatrix();	
+	
+
+glPopMatrix(); // Cabeza con dos ojos y dos fuentes de luz BEGIN
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+/*	
+	// CUELLO
+
+	glPushMatrix();
+	glTranslatef(0,3.8,0);
+	glColor3f(0,1,0);  
+	cuadrado(0.5,0.2,0.5);
+	glPopMatrix();
+
+
+	// TRONCO
+
+	glPushMatrix();
+	glTranslatef(0,1.7,0);
+	glColor3f(0,0,0.8);  
+	cuadrado(1.5,2.2,0.7);
+	glPopMatrix();
+	
+	//BRAZO DCHA part1
+
+	glPushMatrix();
+	glTranslatef(1,3.2,0);
+	glRotatef(20,0,0,0);
+	glColor3f(0,0,0.8); 
+	cuadrado(0.5,0.7,0.7);
+	glPopMatrix();	
+
+			//BRAZO DCHA part2
+
+			glPushMatrix();
+			glTranslatef(1,1.7,0);
+			glRotatef(20,0,0,0);
+			glColor3f(0,1,0);  
+			cuadrado(0.5,1.5,0.7);
+			glPopMatrix();
+
+
+	//BRAZO IZQ part1
+
+	glPushMatrix();
+	glTranslatef(-1,3.2,0);
+	glRotatef(20,0,0,0);
+	glColor3f(0,0,0.8);  
+	cuadrado(0.5,0.7,0.7);
+	glPopMatrix();
+
+			//Brazo IZQ part2
+
+			glPushMatrix();
+			glTranslatef(-1,1.7,0);
+			glRotatef(20,0,0,0);
+			glColor3f(0,1,0);  
+			cuadrado(0.5,1.5,0.7);
+			glPopMatrix();
+
+
+
+	//PIERNA DERECHA 
+
+	glPushMatrix();
+	glTranslatef(0.4,0,0);
+	glColor3f(0,0,1);
+	cuadrado(0.75,1.7,0.7);
+	glPopMatrix();
+
+
+			//PIE DERECHO
+
+			glPushMatrix();
+			glTranslatef(0.4,-0.3,0);
+			glColor3f(1,1,1);
+			cuadrado(0.75,0.3,0.7);
+			glPopMatrix();
+
+
+	//PIERNA IZQUIERDA 
+
+	glPushMatrix();
+	glTranslatef(-0.4,0,0);
+	glColor3f(0,0,1);
+	cuadrado(0.75,1.7,0.7);
+	glPopMatrix();
+
+			//PIE IZQUIERDO 
+
+			glPushMatrix();
+			glTranslatef(-0.4,-0.3,0);
+			glColor3f(1,1,1);
+			cuadrado(0.75,0.3,0.7);
+			glPopMatrix();
+
+*/
+
+glPopMatrix();
+}
+
+
+
+void Minecraft::cabeza_right()
+{
+	giro_cabeza-=1;
+}
+
+//*************************************************************************
+
+void Minecraft::cabeza_left()
+{
+	giro_cabeza+=1;
+}
+
+//*************************************************************************
+
+
+void Minecraft::rdefault()
+{
+	giro_cabeza=0;
+
+}
+
+
+void Minecraft::control_animacion()
+{
+    if(giro_cabeza>45) giro_cabeza =45;
+    if(giro_cabeza<-45) giro_cabeza = -45;
+
+}
+
+
